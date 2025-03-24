@@ -45,6 +45,7 @@ const useLoginHandler = () => {
 const LoginPage = () => {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(useLoginFormSchema()),
+    defaultValues: { name: '' },
   });
   const { isPending, onSubmit } = useLoginHandler();
 

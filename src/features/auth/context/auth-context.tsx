@@ -1,9 +1,10 @@
 import { createContext, ReactNode, useContext } from 'react';
 
 import { useMe } from '@/features/user/hooks/queries/use-me';
+import { User } from '@/features/user/models/user-model';
 
 type AuthContextType = {
-  // user: User | undefined; // Here we can implement a user model to handle user data
+  user: User | undefined; // Here we can implement a user model to handle user data
   isAuthenticated: boolean;
 };
 
@@ -19,6 +20,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider
       value={{
         isAuthenticated: !!user,
+        user,
       }}
     >
       {children}
