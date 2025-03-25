@@ -1,54 +1,99 @@
-# React + TypeScript + Vite
+# Painel Administrativo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tela de login
+![Tela de login](assets/login.png)
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Tela clientes
+![Tela de cliente](assets/customers.png)
 
-## Expanding the ESLint configuration
+## Visão Geral
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Este projeto é um painel administrativo para gerenciar clientes. Ele permite:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- Inserir um nome e acessar a lista de clientes cadastrados.
+- Criar, visualizar, atualizar e excluir clientes.
+- Visualizar detalhes dos clientes selecionados.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Tecnologias Utilizadas
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Front-End:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- React + Vite
+- TypeScript
+- TailwindCSS (para estilização)
+- ShadCN (componentes)
+- Testes end-to-end (NÃO IMPLEMENTADO - AINDA)
+
+### Back-End:
+
+- NestJS
+- CQRS
+- TypeORM + PostgreSQL
+- Swagger para documentação
+- Observabilidade com ferramentas apropriadas(NÃO IMPLEMENTADO - AINDA)
+- Testes unitários
+- BullMQ para escalabilidade
+
+### Gerais:
+
+- Docker e Docker Compose para facilitar a execução
+- AWS para infraestrutura
+- Deploy das aplicações
+- Arquitetura desenhada considerando escalabilidade
+- Gravação de vídeo demonstrativo
+
+## Tempo Estimado de Desenvolvimento
+
+### Tempo total: **2 a 5 semanas (1 - 2 Sprints)**, considerando os diferenciais.
+
+- **Semana 1:** Configuração inicial (Boilerplate), setup de tecnologias, definição da arquitetura.
+- **Semana 2:** Desenvolvimento do CRUD no backend e frontend.
+- **Semana 3:** Melhorias no front, integração com AWS, testes unitários.
+- **Semana 4:** Implementação de diferenciais como observabilidade, mensageria e testes e2e.
+- **Semana 5:** Ajustes finais, otimizações e Deploy e validações finais.
+
+## Equipe Necessária
+
+**2 a 3 desenvolvedores**
+
+- 1 **Desenvolvedor Full Stack Sênior** (para arquitetura, integrações e decisões técnicas críticas)
+- 1 **Desenvolvedor Front-End Pleno ou Sênior** (para desenvolvimento do painel e testes)
+- 1 **Desenvolvedor Back-End Pleno ou Sênior** (para regras de negócio, API, banco de dados e mensageria)
+
+## Rodando o Projeto - Front End
+
+### Pré-requisitos:
+
+- Node.js (versão recente)
+- pnpm ou yarn (gerenciador de pacotes)
+- Navegador atualizado para acessar a aplicação
+- Editor de código (recomendado: Visual Studio Code)
+- Extensão do VS Code para ESLint (opcional, mas recomendado)
+
+### Passos :
+
+1. Clone este repositório:
+   ```sh
+   git clone https://github.com/edufsantos/teddy-front-end
+   ```
+2. Acesse a pasta do projeto:
+   ```sh
+   cd teddy-front-end
+   ```
+3. Suba o projeto na porta 5173
+   ```sh
+   pnpm run dev
+   ```
+4. Acesse o frontend em `http://localhost:5173`
+
+## Melhorias Futuras
+
+- Implementação de testes E2E
+- Criação de permissões usando a lib CASL
+- Implementação de biblioteca de internacionalização como I18n
+
+## Contato
+
+Caso tenha dúvidas ou sugestões, entre em contato pelo e-mail: `eduardosantosifms@gmail.com`.
