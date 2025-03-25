@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export class PaginatedResponse<T> {
   rows: T[];
   count: number;
@@ -12,10 +13,10 @@ export class PaginatedResponse<T> {
   }
 
   static fromApiResponse<T>(
-    responseData: Record<string, unknown>,
+    responseData: any,
     dataMapper: (data: T) => T,
   ): PaginatedResponse<T> {
-    const data = (responseData.data as T[]).map(dataMapper);
+    const data = (responseData.rows as T[]).map(dataMapper);
 
     const meta = {
       count: responseData.count as number,

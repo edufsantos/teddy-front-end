@@ -4,7 +4,6 @@ import { FindCustomersRequest } from '../models/find-customers-request';
 import { FindCustomersResponse } from '../models/find-customers-response';
 import { Customer } from '../models/customer-model';
 import { CreateCustomersRequest } from '../models/create-customers-request';
-import { UpdateCustomerRequest } from '../models/update-customers-request';
 
 class CustomerService {
   constructor(
@@ -41,6 +40,8 @@ class CustomerService {
     }
   }
 
+  async findCustomerById(id: string): Promise<Customer> {}
+
   async createCustomer(request: CreateCustomersRequest): Promise<void> {
     this.logger.debug(
       `Create customer with this params: ${JSON.stringify(request)}`,
@@ -55,31 +56,9 @@ class CustomerService {
     }
   }
 
-  async updateCustomer(customer: UpdateCustomerRequest): Promise<void> {
-    this.logger.debug(
-      `Update customer with this params: ${JSON.stringify(customer)}`,
-    );
+  async updateCustomer(customer: Customer): Promise<Customer> {}
 
-    try {
-      await this.httpClient.patch(`/customers/${customer.id}`, customer);
-      this.logger.debug(`Update customer success`);
-    } catch (error) {
-      this.logger.error(`Update customer failed: ${error}`);
-      throw new Error(String(error));
-    }
-  }
-
-  async deleteCustomer(id: number): Promise<void> {
-    this.logger.debug(`Delete customer with this id: ${id}`);
-
-    try {
-      await this.httpClient.delete(`/customers/${id}`);
-      this.logger.debug(`Delete customer success`);
-    } catch (error) {
-      this.logger.error(`Delete customer failed: ${error}`);
-      throw new Error(String(error));
-    }
-  }
+  async deleteCustomer(id: string): Promise<void> {}
 }
 
 export { CustomerService };

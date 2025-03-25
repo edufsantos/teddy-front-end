@@ -10,6 +10,6 @@ export const useFindCustomers = (params: FindCustomersRequest) => {
 
   return useQuery<FindCustomersResponse>({
     queryKey: queryKeys.customers.all(params.skip, params.take, params.name),
-    queryFn: () => customerServices.findCustomers(params),
+    queryFn: () => customerServices.findCustomers(params).then((res) => res),
   });
 };

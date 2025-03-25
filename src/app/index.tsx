@@ -13,6 +13,7 @@ import { ThemeProvider } from './context/theme-context';
 import { AppRouter } from './router/app-router';
 import { AuthProvider } from '@/features/auth/context/auth-context';
 import { Toaster } from '@/shared/components/ui/sonner';
+import { ModalProvider } from '@/shared/hooks/use-modal';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,7 +42,9 @@ const App = () => {
                   <QueryClientProvider client={queryClient}>
                     <AuthProvider>
                       <ThemeProvider>
-                        <AppRouter />
+                        <ModalProvider>
+                          <AppRouter />
+                        </ModalProvider>
                       </ThemeProvider>
                     </AuthProvider>
                     {/* Conditionally render DevTools in development environment */}
@@ -55,7 +58,7 @@ const App = () => {
           }}
         </ConfigContext.Consumer>
       </LoggerProvider>
-      <Toaster />
+      <Toaster richColors />
     </ConfigProvider>
   );
 };
