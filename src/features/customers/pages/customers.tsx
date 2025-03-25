@@ -1,9 +1,8 @@
 import { Button } from '@/shared/components/ui/button';
-import { Card, CardContent } from '@/shared/components/ui/card';
 import { useModal } from '@/shared/hooks/use-modal';
 import { useQueryString } from '@/shared/hooks/use-query-string';
-import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { CustomerCard } from '../components/customer-card';
 import { CustomerDataDialog } from '../components/customer-data-dialog';
 import { CustomersListEmptyState } from '../components/customers-list-empty-state';
 import { LoaderList } from '../components/customers-loader-list';
@@ -12,8 +11,10 @@ import { DeleteCustomerDialog } from '../components/delete-customer-dialog';
 import { PaginationCustomers } from '../components/pagination-customers';
 import { useDeleteCustomer } from '../hooks/mutations/use-delete-customer';
 import { useFindCustomers } from '../hooks/queries/use-find-customers';
+import { Variant } from '../models/customer-card';
 import { Customer } from '../models/customer-model';
 import { FindCustomersRequest } from '../models/find-customers-request';
+import { FindCustomersResponse } from '../models/find-customers-response';
 
 const useFindCustomersHandler = () => {
   const [query] = useQueryString<FindCustomersRequest>({
@@ -30,19 +31,12 @@ const useFindCustomersHandler = () => {
   };
 };
 
-const CustomerPage = () => {
+const useMudateDataHandler = (
+  refetch: () => void,
+  customers: FindCustomersResponse | undefined,
+) => {
   const { openModal, closeModal } = useModal();
-
-  const { customers, isPending, refetch } = useFindCustomersHandler();
   const { mutate } = useDeleteCustomer();
-
-  if (isPending) {
-    return <LoaderList />;
-  }
-
-  if (!customers?.rows.length) {
-    return <CustomersListEmptyState />;
-  }
 
   const onDelete = (id: number) => {
     openModal({
@@ -81,6 +75,25 @@ const CustomerPage = () => {
     });
   };
 
+  return {
+    onDelete,
+    onCustomerData,
+  };
+};
+
+const CustomerPage = () => {
+  const { customers, isPending, refetch } = useFindCustomersHandler();
+
+  const { onCustomerData, onDelete } = useMudateDataHandler(refetch, customers);
+
+  if (isPending) {
+    return <LoaderList />;
+  }
+
+  if (!customers?.rows.length) {
+    return <CustomersListEmptyState refetch={refetch} />;
+  }
+
   return (
     <div className='p-6'>
       <header className='flex justify-between items-center mb-4'>
@@ -92,34 +105,14 @@ const CustomerPage = () => {
       </header>
 
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-        {customers?.rows.map((customer, index) => (
-          <Card key={index} className='p-4'>
-            <CardContent>
-              <h3 className='font-bold'>{customer.name}</h3>
-              <p className='text-sm'>Salário: {customer.salary}</p>
-              <p className='text-sm'>Empresa: {customer.company_price}</p>
-              <div className='flex justify-between mt-3'>
-                <Button variant='ghost' size='icon'>
-                  <Plus size={16} />
-                </Button>
-                <Button
-                  variant='ghost'
-                  size='icon'
-                  onClick={() => onCustomerData(customer)}
-                >
-                  <Pencil size={16} />
-                </Button>
-                <Button
-                  variant='ghost'
-                  size='icon'
-                  className='text-red-500'
-                  onClick={() => onDelete(customer.id)}
-                >
-                  <Trash2 size={16} />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+        {customers?.rows.map((customer) => (
+          <CustomerCard
+            key={customer.id}
+            customer={customer}
+            variant={Variant.Default}
+            onCustomerData={onCustomerData}
+            onDelete={onDelete}
+          />
         ))}
       </div>
 

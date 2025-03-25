@@ -18,7 +18,6 @@ class CustomerService {
     this.logger.debug(
       `Find customers with this params: ${JSON.stringify(request)}`,
     );
-
     try {
       const res = await this.httpClient.get<FindCustomersResponse>(
         '/customers',

@@ -1,6 +1,31 @@
 import { Button } from '@/shared/components/ui/button';
+import { useModal } from '@/shared/hooks/use-modal';
+import { CustomerDataDialog } from './customer-data-dialog';
 
-const CustomersListEmptyState = () => {
+export interface ICustomersListEmptyStateProps {
+  refetch: () => void;
+  canCreateCustomer?: boolean;
+}
+
+const CustomersListEmptyState = ({
+  refetch,
+  canCreateCustomer = true,
+}: ICustomersListEmptyStateProps) => {
+  const { openModal, closeModal } = useModal();
+
+  const onCustomerData = () => {
+    openModal({
+      title: 'Cadastrar cliente:',
+      elementChildren: (
+        <CustomerDataDialog
+          onClose={closeModal}
+          customer={null}
+          refetch={refetch}
+        />
+      ),
+    });
+  };
+
   return (
     <div className='flex flex-col items-center justify-center h-full'>
       <div className='text-gray-500 text-center'>
@@ -9,13 +34,15 @@ const CustomersListEmptyState = () => {
           Tente ajustar os filtros ou adicionar novos clientes.
         </p>
       </div>
-      <Button
-        variant='outline'
-        className='mt-4'
-        onClick={() => console.log('Criar cliente')}
-      >
-        Criar cliente
-      </Button>
+      {canCreateCustomer && (
+        <Button
+          variant='outline'
+          className='mt-4'
+          onClick={() => onCustomerData()}
+        >
+          Criar cliente
+        </Button>
+      )}
     </div>
   );
 };

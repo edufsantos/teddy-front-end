@@ -21,7 +21,7 @@ const AppSidebar = () => {
   const items = [
     {
       title: 'Home',
-      url: ROUTES.CUSTOMERS.fullPath,
+      url: ROUTES.HOME.fullPath,
       icon: Home,
     },
     {
@@ -31,7 +31,7 @@ const AppSidebar = () => {
     },
     {
       title: 'Produtos',
-      url: '/',
+      url: ROUTES.PRODUCTS.fullPath,
       icon: LayoutGrid,
     },
   ];
