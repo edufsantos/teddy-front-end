@@ -1,17 +1,31 @@
-import { Outlet } from 'react-router';
+import { Link, Outlet, useNavigate } from 'react-router';
 
+import logo from '@/assets/logo-teddy.png';
+import { useAuth } from '@/features/auth/context/auth-context';
+import { Button } from '@/shared/components/ui/button';
 import { Separator } from '@/shared/components/ui/separator';
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from '@/shared/components/ui/sidebar';
+import { queryKeys } from '@/shared/constants/query-keys';
+import { ROUTES } from '@/shared/constants/routes';
+import { useQueryClient } from '@tanstack/react-query';
 import { AppSidebar } from './app-sidebar';
-import logo from '@/assets/logo-teddy.png';
-import { useAuth } from '@/features/auth/context/auth-context';
 
 const Layout = () => {
+  const queryClient = useQueryClient();
   const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const logout = () => {
+    // Change this to a mutation and confirm if this user went out of the app
+    localStorage.clear();
+    queryClient.setQueryData(queryKeys.users.me(), null);
+    navigate(ROUTES.LOGIN.fullPath);
+  };
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -25,15 +39,25 @@ const Layout = () => {
           </div>
 
           <nav className='flex items-center space-x-6 text-sm font-medium'>
-            <a href='#' className='text-orange-500 underline'>
+            <Link
+              to={ROUTES.CUSTOMERS.fullPath}
+              className='text-orange-500 underline'
+            >
               Clientes
-            </a>
-            <a href='#' className='text-gray-700'>
+            </Link>
+            <Link
+              to={ROUTES.SELECTED_CUSTOMERS.fullPath}
+              className='text-orange-500 underline'
+            >
               Clientes selecionados
-            </a>
-            <a href='#' className='text-gray-700'>
+            </Link>
+            <Button
+              className='text-red-700  m-0 p-0'
+              variant='link'
+              onClick={() => logout()}
+            >
               Sair
-            </a>
+            </Button>
           </nav>
 
           <div className='text-sm text-gray-700'>

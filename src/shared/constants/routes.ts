@@ -7,4 +7,8 @@ export const ROUTES = {
     fullPath: '/customers',
     relativePath: 'customers',
   },
+  SELECTED_CUSTOMERS: {
+    fullPath: '/selected-customers',
+    relativePath: 'selected-customers',
+  },
 };

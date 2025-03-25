@@ -9,6 +9,7 @@ import { CustomerPage } from '@/features/customers/pages/customers';
 import { LoginPage } from '@/features/auth/pages/login';
 import { Layout } from '../components/layout';
 import ProtectedRoute from './protected-route';
+import { SelectedCustomersPage } from '@/features/customers/pages/selected-customers';
 
 const AppRouter: React.FC = () => {
   const { isAuthenticated } = useAuth();
@@ -37,6 +38,10 @@ const AppRouter: React.FC = () => {
             <Route
               path={ROUTES.CUSTOMERS.relativePath}
               element={<CustomerPage />}
+            />
+            <Route
+              path={ROUTES.SELECTED_CUSTOMERS.relativePath}
+              element={<SelectedCustomersPage />}
             />
 
             <Route path='*' element={<p>There's nothing here: 404!</p>} />

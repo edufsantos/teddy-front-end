@@ -10,14 +10,14 @@ class UserService {
     private readonly logger: LoggerInterface,
   ) {}
 
-  async me(): Promise<User> {
+  async me(): Promise<User | undefined> {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate a delay
       const userName = localStorage.getItem(Config.CURRENT_USER_NAME);
       const token = localStorage.getItem(Config.AUTH_TOKEN);
 
       if (!userName || !token) {
-        throw new Error('User not authenticated');
+        return undefined;
       }
       return User.fromApiResponse({
         id: 1,

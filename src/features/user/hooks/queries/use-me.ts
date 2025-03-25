@@ -8,7 +8,7 @@ import { User } from '../../models/user-model';
 export const useMe = () => {
   const userService = useServices().userService;
 
-  return useQuery<User>({
+  return useQuery<User | undefined>({
     queryKey: queryKeys.users.me(),
     queryFn: () => userService.me(),
     retry: 0,
